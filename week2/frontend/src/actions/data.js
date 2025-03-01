@@ -41,3 +41,13 @@ export const deleteEq = async(id) => {
     });
     return response;
 }
+
+
+export const getOneEq = async(id) => {
+    const response  = axios.get(`/api/earthquakes/${id}`, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    return response;
+}

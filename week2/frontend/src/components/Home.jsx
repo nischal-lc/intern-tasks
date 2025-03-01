@@ -4,6 +4,7 @@ import { findFlagUrlByCountryName } from "country-flags-svg";
 import { addEq, deleteEq, editEq, fetchData } from "../actions/data";
 import { ToastContainer, toast } from "react-toastify";
 import { toastConfig } from "../configs/toastConfig";
+import { Link } from "react-router-dom";
 
 const Home = () => {
 	const [earthquakes, setEarthquakes] = useState([]);
@@ -21,7 +22,7 @@ const Home = () => {
 		e.preventDefault();
 		try {
 			const response = await addEq(formData);
-			toast(response.data.message, {});
+			toast(response.data.message, toastConfig);
 			setFormData({ country: "", magnitude: "", date: "" });
 			setRefresh(!refresh);
 		} catch (err) {
@@ -44,16 +45,20 @@ const Home = () => {
 						{earthquakes.map((eq) => {
 							const flagUrl = findFlagUrlByCountryName(eq.country);
 							return (
-								<Card
-									id={eq.id}
-									country={eq.country}
-									magnitude={eq.magnitude}
-									date={eq.date}
-									flag={flagUrl}
-									setRefresh={setRefresh}
+								<Link
 									key={eq.id}
-									refresh={refresh}
-								/>
+									to={`earthquakes/${eq.id}
+								`}>
+									<Card
+										id={eq.id}
+										country={eq.country}
+										magnitude={eq.magnitude}
+										date={eq.date}
+										flag={flagUrl}
+										setRefresh={setRefresh}
+										refresh={refresh}
+									/>
+								</Link>
 							);
 						})}
 					</div>
